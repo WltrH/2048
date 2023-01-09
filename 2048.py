@@ -18,7 +18,7 @@ Cette fonction devra choisir au hasard une case vide et y insérer une nouvelle 
 
 Je vous recommande également d'utiliser la bibliothèque pygame pour gérer l'interface graphique de votre jeu. 
 Cela vous permettra de créer une grille affichée à l'écran et de gérer les entrées de l'utilisateur à l'aide de la bibliothèque pygame.
-
+test ster
 """
 
 
@@ -51,25 +51,40 @@ def init_grid (matrice):
 
 def add_digit(matrice):
     #création variables pour permettre l'extensibilité de la matrice
-    maxi = len(matrice)     #lignes
-    mini = len(matrice[0])  #colonnes
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
 
-    count = 0
+    placed = False
 
-    for i in range (maxi):
-        for j in range (mini):
+    print("----------Placed-----------")
+    print (placed)
+
+    while not placed:
+        li = np.random.randint(lig)
+        co = np.random.randint(col)
+        print("----------li&co-----------")
+        print (li, co)
+        
+
+        if matrice[li,co] == 0:
             rand = np.random.randint(10)
-
-            if rand < 7 and count < 1:
-                matrice[i][j] = 2
-            elif rand > 7 and count < 1:
-                matrice[i][j] = 4
-
+        
+            if rand <= 7:
+                matrice[li,co] = 2
+                placed = True
+            else :
+                matrice[li,co] = 4
+                placed = True
 
 
 
 matrice = np.zeros((4,4))
+print("---------------------")
+print("---------------------")
 init_grid(matrice)
 print (matrice)
+print("---------------------")
+print("---------------------")
 add_digit(matrice)
 print (matrice)
+ 
