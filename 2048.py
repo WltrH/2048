@@ -91,19 +91,29 @@ def rolling_digit(row):
     if row == 1: #1 vaut déplacement sur la gauche
         for i in range (col):
             for j in range (lig):
-                if matrice[i][j] != 0:
+                if matrice[i,j] != 0:
                     k = j
-                    while k > 0 and matrice[i][k-1]==0:
+                    while k > 0 and matrice[i,k-1]==0:
                         matrice[i][k-1] = matrice[i][k]
                         matrice[i][k] = 0
                         k -= 1
-                elif matrice[i][j] != 0 and matrice[i][j] == matrice[i][j+1]:
-                    k =  j
-                    while k > 0 and matrice[i][k-1] == 0:
-                        matrice[i][k-1] = matrice[i][k-1] + matrice[i][k]
-                        matrice[i][k] = 0
-                        print ("addition à faire")
-                    pass
+                        """      
+                        if matrice[i][j] != 0 and matrice[i][j] == matrice[i][j+1]:                    
+                            matrice[i][j] = matrice[i][j+1] + matrice[i][j]
+                            matrice[i][j+1] = 0
+                            pass
+                        """
+
+def sum_digit(matrice):
+
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
+
+    for i in range (lig):
+        for j in range (col-1):
+            if matrice[i,j] == matrice[i,j+1]:
+                matrice[i,j] = matrice[i,j] + matrice[i,j+1]
+                matrice[i,j+1] = 0
 
 
 matrice = np.zeros((4,4))
@@ -120,6 +130,10 @@ print (matrice)
 print("---------------------")
 print("---------------------")
 rolling_digit(row)
+print(matrice)
+print("---------------------")
+print("---------------------")
+sum_digit(matrice)
 print(matrice)
 print("---------------------")
 print("---------------------")
