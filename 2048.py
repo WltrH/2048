@@ -88,9 +88,9 @@ def rolling_digit(row):
     #si la variable row = 1 on fait passer les numéros de la matrice vers la gauche
     #faire en suite d'autres fonctions de déplacement pour ne laisser que cette fonction qui appelera les autres fonctions de mouvement
 
-    if row == 1:
-        for i in range (lig):
-            for j in range (col):
+    if row == 1: #1 vaut déplacement sur la gauche
+        for i in range (col):
+            for j in range (lig):
                 if matrice[i][j] != 0:
                     k = j
                     while k > 0 and matrice[i][k-1]==0:
@@ -100,13 +100,15 @@ def rolling_digit(row):
                 elif matrice[i][j] != 0 and matrice[i][j] == matrice[i][j+1]:
                     k =  j
                     while k > 0 and matrice[i][k-1] == 0:
-
+                        matrice[i][k-1] = matrice[i][k-1] + matrice[i][k]
+                        matrice[i][k] = 0
                         print ("addition à faire")
                     pass
 
 
 matrice = np.zeros((4,4))
 row = 1
+#matrice = [[2, 2, 0, 0],[0, 0, 0, 0],[0, 0, 0, 2],[0, 0, 0, 0]]
 print("---------------------")
 print("---------------------")
 init_grid(matrice)
@@ -119,3 +121,5 @@ print("---------------------")
 print("---------------------")
 rolling_digit(row)
 print(matrice)
+print("---------------------")
+print("---------------------")
