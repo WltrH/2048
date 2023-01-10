@@ -30,14 +30,14 @@ test ster
 def init_grid (matrice):
 
     #création variables pour permettre l'extensibilité de la matrice
-    maxi = len(matrice)     #lignes
-    mini = len(matrice[0])  #colonnes
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
 
     #matrice = np.zeros((maxi,mini))
     values = [0,2]
     count = 0
-    for i in range (maxi):
-        for j in range  (mini):
+    for i in range (lig):
+        for j in range  (col):
             #mise des valeurs à 0 et 2 avec un maximum de 2 valeurs à 2 et le reste à 0
             if count < 2: 
                 matrice[i][j] = np.random.choice(values)
@@ -54,19 +54,18 @@ def add_digit(matrice):
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
 
+    #booléen pour savoir si mon placement est juste
     placed = False
 
-    print("----------Placed-----------")
-    print (placed)
-
+    #boucle while sur le bool tant que je suis à False je rentre dans la boucle
     while not placed:
+        #Nombre random sur les lignes et colonnes pour avoir un emplacement
         li = np.random.randint(lig)
         co = np.random.randint(col)
-        print("----------li&co-----------")
-        print (li, co)
         
-
+        #si l'emplacement est = 0
         if matrice[li,co] == 0:
+            #numéro random sur 10
             rand = np.random.randint(10)
         
             if rand <= 7:
@@ -78,7 +77,36 @@ def add_digit(matrice):
 
 
 
+#Mise en place de la fonction rolling_row pour faire l'addition des nombres dans la matrice avec ajout d'un numéro 
+#venant de add_digit au dessus
+
+def rolling_digit(row):
+
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
+
+    #si la variable row = 1 on fait passer les numéros de la matrice vers la gauche
+    #faire en suite d'autres fonctions de déplacement pour ne laisser que cette fonction qui appelera les autres fonctions de mouvement
+
+    if row == 1:
+        for i in range (lig):
+            for j in range (col):
+                if matrice[i][j] != 0:
+                    k = j
+                    while k > 0 and matrice[i][k-1]==0:
+                        matrice[i][k-1] = matrice[i][k]
+                        matrice[i][k] = 0
+                        k -= 1
+                elif matrice[i][j] != 0 and matrice[i][j] == matrice[i][j+1]:
+                    k =  j
+                    while k > 0 and matrice[i][k-1] == 0:
+
+                        print ("addition à faire")
+                    pass
+
+
 matrice = np.zeros((4,4))
+row = 1
 print("---------------------")
 print("---------------------")
 init_grid(matrice)
@@ -87,4 +115,7 @@ print("---------------------")
 print("---------------------")
 add_digit(matrice)
 print (matrice)
- 
+print("---------------------")
+print("---------------------")
+rolling_digit(row)
+print(matrice)
