@@ -30,8 +30,8 @@ test ster
 def init_grid (matrice):
 
     #création variables pour permettre l'extensibilité de la matrice
-    lig = len(matrice)     #lignes
-    col = len(matrice[0])  #colonnes
+    lig = len(matrice[0])     #lignes
+    col = len(matrice)  #colonnes
 
     #matrice = np.zeros((maxi,mini))
     values = [0,2]
@@ -40,19 +40,20 @@ def init_grid (matrice):
         for j in range  (col):
             #mise des valeurs à 0 et 2 avec un maximum de 2 valeurs à 2 et le reste à 0
             if count < 2: 
-                matrice[i][j] = np.random.choice(values)
-                if matrice[i][j] == 2:
+                matrice[i,j] = np.random.choice(values)
+                if matrice[i,j] == 2:
                     count += 1
                 else:
-                     matrice[i][j] = 0
+                     matrice[i,j] = 0
+
 
 
 #MMise en place de la fonction add_grid pour rajouter un élément dans la matrice (80% = 2 20% = 4)
 
 def add_digit(matrice):
     #création variables pour permettre l'extensibilité de la matrice
-    lig = len(matrice)     #lignes
-    col = len(matrice[0])  #colonnes
+    lig = len(matrice[0])     #lignes
+    col = len(matrice)  #colonnes
 
     #booléen pour savoir si mon placement est juste
     placed = False
@@ -74,6 +75,7 @@ def add_digit(matrice):
             else :
                 matrice[li,co] = 4
                 placed = True
+        #return (matrice)
 
 
 
@@ -97,6 +99,7 @@ def rolling_left(row):
                         matrice[i,k-1] = matrice[i,k]
                         matrice[i,k] = 0
                         k -= 1
+                    #return (matrice)
 # Fonction pour renvoyer les éléments de la matrice vers la droite 
 def rolling_right(row):
     lig = len(matrice[0])     #lignes
@@ -114,7 +117,7 @@ def rolling_right(row):
                         matrice[i,k+1] = matrice[i,k]
                         matrice[i,k] = 0
                         k += 1
-
+                    #return (matrice)
                       
 def rolling_up(row):
 
@@ -130,6 +133,8 @@ def rolling_up(row):
                         matrice[l-1,j] = matrice[l,j]
                         matrice[l,j] = 0
                         l -= 1
+                    #return (matrice)
+
 
 def rolling_down(row):
 
@@ -145,6 +150,8 @@ def rolling_down(row):
                         matrice[l+1,j] = matrice[l,j]
                         matrice[l,j] = 0
                         l += 1
+                    #return (matrice)
+
 
 def sum_digit(matrice):#pour la gauche
 
@@ -156,11 +163,16 @@ def sum_digit(matrice):#pour la gauche
             if matrice[i,j] == matrice[i,j+1]:
                 matrice[i,j] = matrice[i,j] + matrice[i,j+1]
                 matrice[i,j+1] = 0
+                #return (matrice)
 
 
-matrice = np.zeros((4,4))
+#matrice = np.zeros((4,4))
 row = 1
-#matrice = [[2, 2, 0, 0],[0, 0, 0, 0],[0, 0, 0, 2],[0, 0, 0, 0]]
+matrice = np.array([[2, 0, 2, 0],
+[0, 2, 2, 0],
+[0, 0, 2, 2],
+[0, 0, 0, 0]])
+"""
 print("---------------------")
 print("---------------------")
 init_grid(matrice)
@@ -169,6 +181,7 @@ print("---------------------")
 print("---------------------")
 add_digit(matrice)
 print (matrice)
+
 print("---------------------")
 print("---------------------")
 rolling_left(row)
@@ -182,9 +195,9 @@ print("---------------------")
 row = 2
 rolling_right(row)
 print(matrice)
+
 print("--------haut-------------")
 print("---------------------")
-
 row = 3
 rolling_up(row)
 print(matrice)
@@ -193,5 +206,23 @@ print("---------------------")
 row = 4
 rolling_down(row)
 print(matrice)
+"""
+row = 1
 print("---------------------")
+print("---------Matrice------------")
+
+print(matrice)
+
 print("---------------------")
+print("---------rotation------------")
+matrice = np.rot90(matrice,k=-1)
+print (matrice)
+
+#print("---------------------")
+#print("---------gauche------------")
+#rolling_left(row)
+#print (matrice)
+print("---------------------")
+print("---------position initiale------------")
+matrice = np.rot90(matrice,k=1)
+print (matrice)
