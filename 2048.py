@@ -94,54 +94,56 @@ def rolling_left(row):
                 if matrice[i,j] != 0:
                     k = j
                     while k > 0 and matrice[i,k-1]==0:
-                        matrice[i][k-1] = matrice[i][k]
-                        matrice[i][k] = 0
+                        matrice[i,k-1] = matrice[i,k]
+                        matrice[i,k] = 0
                         k -= 1
-    
+# Fonction pour renvoyer les éléments de la matrice vers la droite 
 def rolling_right(row):
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
     
-    if row == 2: #1 vaut déplacement sur la droite
+    if row == 2: #2 vaut déplacement sur la droite
         for i in range (col):
             for j in range (lig):
                 if matrice[i,j] != 0:
                     k = j
-                    while k > 0 and matrice[i,k+1]==0:
-                        matrice[i][k+1] = matrice[i][k]
-                        matrice[i][k] = 0
+                    while k < col-1 and matrice[i,k+1]==0:
+                        matrice[i,k+1] = matrice[i,k]
+                        matrice[i,k] = 0
                         k += 1
+
+                      
 def rolling_up(row):
 
-    lig = len(matrice)     #lignes
-    col = len(matrice[0])  #colonnes
+    lig = len(matrice[0])     #lignes
+    col = len(matrice)  #colonnes
     
-    if row == 3: #1 vaut déplacement vers le haut
-        for i in range (col):
-            for j in range (lig):
+    if row == 3: #3 vaut déplacement vers le haut
+        for i in range (lig):
+            for j in range (col):
                 if matrice[i,j] != 0:
                     l = i
                     while l > 0 and matrice[l-1,j]==0:
-                        matrice[l-1][j] = matrice[l][j]
-                        matrice[l][j] = 0
+                        matrice[l-1,j] = matrice[l,j]
+                        matrice[l,j] = 0
                         l -= 1
 
 def rolling_down(row):
 
-    lig = len(matrice)     #lignes
-    col = len(matrice[0])  #colonnes
+    lig = len(matrice[0])     #lignes
+    col = len(matrice)  #colonnes
     
-    if row == 4: #1 vaut déplacement vers le haut
-        for i in range (col):
-            for j in range (lig):
+    if row == 4: #4 vaut déplacement vers le bas
+        for i in range (lig):
+            for j in range (col):
                 if matrice[i,j] != 0:
                     l = i
-                    while l > 0 and matrice[l+1,j]==0:
-                        matrice[l+1][j] = matrice[l][j]
-                        matrice[l][j] = 0
+                    while l < lig-1 and matrice[l+1,j]==0:
+                        matrice[l+1,j] = matrice[l,j]
+                        matrice[l,j] = 0
                         l += 1
 
-def sum_digit(matrice):
+def sum_digit(matrice):#pour la gauche
 
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
@@ -166,11 +168,26 @@ add_digit(matrice)
 print (matrice)
 print("---------------------")
 print("---------------------")
-rolling_digit(row)
+rolling_left(row)
 print(matrice)
-print("---------------------")
+print("--------gauche-------------")
 print("---------------------")
 sum_digit(matrice)
+print(matrice)
+print("---------droite------------")
+print("---------------------")
+row = 2
+rolling_right(row)
+print(matrice)
+print("--------haut-------------")
+print("---------------------")
+row = 3
+rolling_up(row)
+print(matrice)
+print("--------bas-------------")
+print("---------------------")
+row = 4
+rolling_down(row)
 print(matrice)
 print("---------------------")
 print("---------------------")
