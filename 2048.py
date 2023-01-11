@@ -80,7 +80,7 @@ def add_digit(matrice):
 #Mise en place de la fonction rolling_row pour faire l'addition des nombres dans la matrice avec ajout d'un numéro 
 #venant de add_digit au dessus
 
-def rolling_digit(row):
+def rolling_left(row):
 
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
@@ -97,12 +97,49 @@ def rolling_digit(row):
                         matrice[i][k-1] = matrice[i][k]
                         matrice[i][k] = 0
                         k -= 1
-                        """      
-                        if matrice[i][j] != 0 and matrice[i][j] == matrice[i][j+1]:                    
-                            matrice[i][j] = matrice[i][j+1] + matrice[i][j]
-                            matrice[i][j+1] = 0
-                            pass
-                        """
+    
+def rolling_right(row):
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
+    
+    if row == 2: #1 vaut déplacement sur la droite
+        for i in range (col):
+            for j in range (lig):
+                if matrice[i,j] != 0:
+                    k = j
+                    while k > 0 and matrice[i,k+1]==0:
+                        matrice[i][k+1] = matrice[i][k]
+                        matrice[i][k] = 0
+                        k += 1
+def rolling_up(row):
+
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
+    
+    if row == 3: #1 vaut déplacement vers le haut
+        for i in range (col):
+            for j in range (lig):
+                if matrice[i,j] != 0:
+                    l = i
+                    while l > 0 and matrice[l-1,j]==0:
+                        matrice[l-1][j] = matrice[l][j]
+                        matrice[l][j] = 0
+                        l -= 1
+
+def rolling_down(row):
+
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
+    
+    if row == 4: #1 vaut déplacement vers le haut
+        for i in range (col):
+            for j in range (lig):
+                if matrice[i,j] != 0:
+                    l = i
+                    while l > 0 and matrice[l+1,j]==0:
+                        matrice[l+1][j] = matrice[l][j]
+                        matrice[l][j] = 0
+                        l += 1
 
 def sum_digit(matrice):
 
