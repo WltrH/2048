@@ -19,6 +19,9 @@ Cette fonction devra choisir au hasard une case vide et y insérer une nouvelle 
 Je vous recommande également d'utiliser la bibliothèque pygame pour gérer l'interface graphique de votre jeu. 
 Cela vous permettra de créer une grille affichée à l'écran et de gérer les entrées de l'utilisateur à l'aide de la bibliothèque pygame.
 test ster
+
+Fonction à définir pour faire fonctionner le jeux et le mettre en place
+Mettre en place l'interface graphique du jeux
 """
 
 
@@ -218,11 +221,19 @@ print("---------rotation------------")
 matrice = np.rot90(matrice,k=-1)
 print (matrice)
 
-#print("---------------------")
-#print("---------gauche------------")
-#rolling_left(row)
-#print (matrice)
+print("---------------------")
+print("---------gauche------------")
+rolling_left(row)
+print (matrice)
 print("---------------------")
 print("---------position initiale------------")
 matrice = np.rot90(matrice,k=1)
 print (matrice)
+
+
+"""
+Réponses sur la rotation
+    pour la rotation pour faire déplacer vers la droite rot90 = 2 et -2
+    pour la rotation pour faire déplacer vers le haut rot90 = 3 et -3
+    pour la rotation pour faire déplacer vers le bas rot90 = 1 et -1
+"""
