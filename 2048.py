@@ -1,4 +1,5 @@
 
+from select import POLLIN
 import numpy as np
 import random
 
@@ -69,7 +70,7 @@ def add_digit(matrice):
     #   FONTION DECALAGE VERS LA GAUCHE    #
     ########################################
 
-def rolling_left(row):
+def rolling_left(matrice):
 
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
@@ -77,15 +78,14 @@ def rolling_left(row):
     #si la variable row = 1 on fait passer les numéros de la matrice vers la gauche
     #faire en suite d'autres fonctions de déplacement pour ne laisser que cette fonction qui appelera les autres fonctions de mouvement
 
-    if row == 1: #1 vaut déplacement sur la gauche
-        for i in range (lig):
-            for j in range (col):
-                if matrice[i,j] != 0:
-                    k = j
-                    while k > 0 and matrice[i,k-1]==0:
-                        matrice[i,k-1] = matrice[i,k]
-                        matrice[i,k] = 0
-                        k -= 1
+    for i in range (lig):
+        for j in range (col):
+            if matrice[i,j] != 0:
+                k = j
+                while k > 0 and matrice[i,k-1]==0:
+                    matrice[i,k-1] = matrice[i,k]
+                    matrice[i,k] = 0
+                    k -= 1
                     #return (matrice)
 
     ########################################
@@ -105,16 +105,78 @@ def sum_digit(matrice):#pour la gauche
                 #return (matrice)
 
 
+def trollin(matrix, key):
+    print("-----Matrice trollin-----")
+    print (matrix)
+    way = True
+
+    
+    while way :
+        if key == ("g"):
+            rolling_left(matrix)
+            sum_digit(matrix)
+            rolling_left(matrix)
+            matrix = add_digit(matrix)
+            print("-----Matrice trollin Gauche-----")
+            print (matrix)
+            return (matrix)
+            way = False
+        elif key ==("d"):
+            matrix = np.rot90(matrix, k = -2)
+            print("-----Matrice trollin rotation-----")
+            print (matrix)
+            rolling_left(matrix)
+            sum_digit(matrix)
+            rolling_left(matrix)
+            matrix = np.rot90(matrix,k = 2)
+            matrix = add_digit(matrix)
+            print("-----Matrice trollin Droite-----")
+            print (matrix)
+            return (matrix)
+            way = False
+        elif key ==("h"):
+            matrix = np.rot90(matrix, k = -3)
+            rolling_left(matrix)
+            sum_digit(matrix)
+            rolling_left(matrix)
+            matrix = np.rot90(matrix,k = 3)
+            matrix = add_digit(matrix)
+            print("-----Matrice trollin Haut-----")
+            print (matrix)
+            return (matrix)
+            way = False
+        elif key == ("b"):
+            matrix = np.rot90(matrix, k = -1)
+            rolling_left(matrix)
+            sum_digit(matrix)
+            rolling_left(matrix)
+            matrix = np.rot90(matrix,k = 1)
+            matrix = add_digit(matrix)
+            print("-----Matrice trollin Bas-----")
+            print (matrix)
+            return (matrix)
+            way = False
 
 #Test des fonctions de mouvement du jeux
 #matrice = np.zeros((4,4))
-row = 1
+
+
+
 matrice = np.array([[2, 0, 2, 0],
 [0, 2, 2, 0],
 [0, 0, 2, 2],
 [0, 0, 0, 0]])
 
-row = 1
+print ("-----Matrice de base-----")
+print (matrice)
+
+key = input ("Veuillez choisir en h, b, d, g: ")
+
+trollin(matrice, key)
+
+print ("-----Matrice après trollin------")
+print (matrice)
+"""
 print("---------------------")
 print("---------Matrice------------")
 
@@ -141,6 +203,8 @@ print("---------------------")
 print("---------position initiale------------")
 matrice = np.rot90(matrice,k=1)
 print (matrice)
+"""
+
 
 
 
@@ -150,66 +214,5 @@ Réponses sur la rotation
     pour la rotation pour faire déplacer vers le haut rot90 = 3 et -3
     pour la rotation pour faire déplacer vers le bas rot90 = 1 et -1
 """
-"""
-#Architecture du jeux
-
-
-        #si la variable row = 1 on fait passer les numéros de la matrice vers la gauche
-        #faire en suite d'autres fonctions de déplacement pour ne laisser que cette fonction qui appelera les autres fonctions de mouvement
-    ########################################
-    #              ALGORYTHME              #
-    ########################################
-        
-        Algo pour la gestion du jeu et appel des différentes fonctions
-
-
-        mettre des booléens pour connaitre l'état de l'algo, si traité ou non
-        modifier les fonctions pour faire les rotations ???
-            si touche droite alors rotation + décalage + addition + décalage + rotation ?
-            a dupliquer pour le reste
-        
-
-"""
-
-def rollin(matrix, key):
-
-    
-
-    print (matrix)
-
-    
-
-    way = True
-    
-    while way :
-        if key == ("g"):
-            rolling_left(key)
-            sum_digit(matrix)
-            rolling_left(key)
-            matrix = add_digit(matrix)
-            way = False
-        elif key ==("d"):
-            matrix = np.rot90(matrix, k = -2)
-            rolling_left(key)
-            sum_digit(matrix)
-            rolling_left(key)
-            matrix = np.rot90(matrix,k = 2)
-            matrix = add_digit(matrix)
-        elif key ==("h"):
-            matrix = np.rot90(matrix, k = -3)
-            rolling_left(key)
-            sum_digit(matrix)
-            rolling_left(key)
-            matrix = np.rot90(matrix,k = 3)
-            matrix = add_digit(matrix)
-        elif key == ("b"):
-            matrix = np.rot90(matrix, k = -1)
-            rolling_left(key)
-            sum_digit(matrix)
-            rolling_left(key)
-            matrix = np.rot90(matrix,k = 1)
-            matrix = add_digit(matrix)
-        return (matrix)
-
 
 
