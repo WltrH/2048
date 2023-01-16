@@ -2,34 +2,11 @@
 import numpy as np
 import random
 
-"""
-1-Commencez par définir la structure de votre grille de jeu. Vous pouvez utiliser 
-une liste à double entrée pour stocker les valeurs de chaque case de la grille.
-
-2-Ensuite, écrivez une fonction qui gère les déplacements de la grille lorsque 
-l'utilisateur utilise les flèches du clavier. Cette fonction devra prendre en compte les règles du jeu, 
-comme la fusion de cases de même valeur et l'interdiction de déplacer des cases vers des cases déjà occupées.
-
-3-Ajoutez une fonction qui gère l'ajout de nouvelles cases à la grille après chaque coup joué par l'utilisateur. 
-Cette fonction devra choisir au hasard une case vide et y insérer une nouvelle valeur (2 ou 4).
-
-4-Enfin, écrivez une fonction principale qui initialise la grille et gère les entrées de l'utilisateur jusqu'à ce que la partie
- soit terminée (soit parce que la grille est pleine, soit parce que l'utilisateur a atteint la valeur cible 2048).
-
-Je vous recommande également d'utiliser la bibliothèque pygame pour gérer l'interface graphique de votre jeu. 
-Cela vous permettra de créer une grille affichée à l'écran et de gérer les entrées de l'utilisateur à l'aide de la bibliothèque pygame.
-test ster
-
-Fonction à définir pour faire fonctionner le jeux et le mettre en place
-Mettre en place l'interface graphique du jeux
-"""
-
-
 #initialisation de la matrice por le jeux 2048
-
 #matrice extensible
-
-
+    ########################################
+    #     INITIALISATION DE LA MATRICE     #
+    ########################################
 def init_grid (matrice):
 
     #création variables pour permettre l'extensibilité de la matrice
@@ -52,6 +29,9 @@ def init_grid (matrice):
 
 
 #Mise en place de la fonction add_grid pour rajouter un élément dans la matrice (80% = 2 20% = 4)
+    ########################################
+    #     FONTION AJOUT CHIFFRE 2 ou 4     #
+    ########################################
 
 def add_digit(matrice):
     #création variables pour permettre l'extensibilité de la matrice
@@ -72,7 +52,7 @@ def add_digit(matrice):
             #numéro random sur 10
             rand = np.random.randint(10)
             #80% pour le chiffre 2 sinon 4
-            if rand <= 7:
+            if rand <= 8:
                 matrice[li,co] = 2
                 placed = True
             else :
@@ -84,6 +64,10 @@ def add_digit(matrice):
 
 #Mise en place de la fonction rolling_row pour faire l'addition des nombres dans la matrice avec ajout d'un numéro 
 #venant de add_digit au dessus
+
+    ########################################
+    #   FONTION DECALAGE VERS LA GAUCHE    #
+    ########################################
 
 def rolling_left(row):
 
@@ -103,58 +87,10 @@ def rolling_left(row):
                         matrice[i,k] = 0
                         k -= 1
                     #return (matrice)
-# Fonction pour renvoyer les éléments de la matrice vers la droite 
-def rolling_right(row):
-    lig = len(matrice[0])     #lignes
-    col = len(matrice)  #colonnes
 
-   #2 vaut déplacement sur la droite 
-    if row == 2: 
-
-        #boucle pour les colonne
-        for i in range (lig):
-            for j in range (col):
-                if matrice[i,j] != 0:
-                    k = j
-                    while k < col-1 and matrice[i,k+1]==0:
-                        matrice[i,k+1] = matrice[i,k]
-                        matrice[i,k] = 0
-                        k += 1
-                    #return (matrice)
-                      
-def rolling_up(row):
-
-    lig = len(matrice)     #lignes
-    col = len(matrice[0])  #colonnes
-    
-    if row == 3: #3 vaut déplacement vers le haut
-        for i in range (col):
-            for j in range (lig):
-                if matrice[i,j] != 0:
-                    l = i
-                    while l > 0 and matrice[l-1,j]==0:
-                        matrice[l-1,j] = matrice[l,j]
-                        matrice[l,j] = 0
-                        l -= 1
-                    #return (matrice)
-
-
-def rolling_down(row):
-
-    lig = len(matrice)     #lignes
-    col = len(matrice[0])  #colonnes
-    
-    if row == 4: #4 vaut déplacement vers le bas
-        for i in range (col):
-            for j in range (lig):
-                if matrice[i,j] != 0:
-                    l = i
-                    while l < lig-1 and matrice[l+1,j]==0:
-                        matrice[l+1,j] = matrice[l,j]
-                        matrice[l,j] = 0
-                        l += 1
-                    #return (matrice)
-
+    ########################################
+    #           FONTION ADDITION           #
+    ########################################
 
 def sum_digit(matrice):#pour la gauche
 
@@ -168,6 +104,8 @@ def sum_digit(matrice):#pour la gauche
                 matrice[i,j+1] = 0
                 #return (matrice)
 
+
+
 #Test des fonctions de mouvement du jeux
 #matrice = np.zeros((4,4))
 row = 1
@@ -175,41 +113,7 @@ matrice = np.array([[2, 0, 2, 0],
 [0, 2, 2, 0],
 [0, 0, 2, 2],
 [0, 0, 0, 0]])
-"""
-print("---------------------")
-print("---------------------")
-init_grid(matrice)
-print (matrice)
-print("---------------------")
-print("---------------------")
-add_digit(matrice)
-print (matrice)
 
-print("---------------------")
-print("---------------------")
-rolling_left(row)
-print(matrice)
-print("--------gauche-------------")
-print("---------------------")
-sum_digit(matrice)
-print(matrice)
-print("---------droite------------")
-print("---------------------")
-row = 2
-rolling_right(row)
-print(matrice)
-
-print("--------haut-------------")
-print("---------------------")
-row = 3
-rolling_up(row)
-print(matrice)
-print("--------bas-------------")
-print("---------------------")
-row = 4
-rolling_down(row)
-print(matrice)
-"""
 row = 1
 print("---------------------")
 print("---------Matrice------------")
@@ -226,9 +130,18 @@ print("---------gauche------------")
 rolling_left(row)
 print (matrice)
 print("---------------------")
+print("---------addition------------")
+sum_digit(matrice)
+print (matrice)
+print("---------------------")
+print("---------gauche------------")
+rolling_left(row)
+print (matrice)
+print("---------------------")
 print("---------position initiale------------")
 matrice = np.rot90(matrice,k=1)
 print (matrice)
+
 
 
 """
@@ -237,98 +150,16 @@ Réponses sur la rotation
     pour la rotation pour faire déplacer vers le haut rot90 = 3 et -3
     pour la rotation pour faire déplacer vers le bas rot90 = 1 et -1
 """
-
+"""
 #Architecture du jeux
-class Game_2048():
 
-    ########################################
-    #   INITIALISATION DE LA MATRICE       #
-    ########################################
-
-    def __init__(self):
-        
-        lig = len(matrice[0])     #lignes
-        col = len(matrice)  #colonnes
-
-        #matrice = np.zeros((maxi,mini))
-        values = [0,2]
-        count = 0
-        for i in range (lig):
-            for j in range  (col):
-                #mise des valeurs à 0 et 2 avec un maximum de 2 valeurs à 2 et le reste à 0
-                if count < 2: 
-                    matrice[i,j] = np.random.choice(values)
-                    if matrice[i,j] == 2:
-                        count += 1
-                    else:
-                        matrice[i,j] = 0
-    
-
-    ########################################
-    #   FONTION AJOUT CHIFFRE 2 ou 4       #
-    ########################################
-
-    #Mise en place de la fonction add_grid pour rajouter un élément dans la matrice (80% = 2 20% = 4)
-
-    def add_digit(matrice):
-        #création variables pour permettre l'extensibilité de la matrice
-        lig = len(matrice[0])     #lignes
-        col = len(matrice)  #colonnes
-
-        #booléen pour savoir si mon placement est juste
-        placed = False
-
-        #boucle while sur le bool tant que je suis à False je rentre dans la boucle
-        while not placed:
-            #Nombre random sur les lignes et colonnes pour avoir un emplacement
-            li = np.random.randint(lig)
-            co = np.random.randint(col)
-        
-            #si l'emplacement est = 0
-            if matrice[li,co] == 0:
-                #numéro random sur 10
-                rand = np.random.randint(10)
-                #80% pour le chiffre 2 sinon 4
-                if rand <= 7:
-                    matrice[li,co] = 2
-                    placed = True
-                else :
-                    matrice[li,co] = 4
-                    placed = True
-
-    ########################################
-    #   FONTION DECALAGE VERS LA GAUCHE    #
-    ########################################
-
-
-    def rolling_left(row):
-
-        lig = len(matrice[0])     #lignes
-        col = len(matrice)  #colonnes
 
         #si la variable row = 1 on fait passer les numéros de la matrice vers la gauche
         #faire en suite d'autres fonctions de déplacement pour ne laisser que cette fonction qui appelera les autres fonctions de mouvement
-
-        if row == 1: #1 vaut déplacement sur la gauche
-            for i in range (lig):
-                for j in range (col):
-                    if matrice[i,j] != 0:
-                        k = j
-                        while k > 0 and matrice[i,k-1]==0:
-                            matrice[i,k-1] = matrice[i,k]
-                            matrice[i,k] = 0
-                            k -= 1
-
-    ########################################
-    #   FONTION ...     #
-    ########################################
-        
-
     ########################################
     #              ALGORYTHME              #
     ########################################
-
-        """
+        
         Algo pour la gestion du jeu et appel des différentes fonctions
 
 
@@ -336,4 +167,43 @@ class Game_2048():
         modifier les fonctions pour faire les rotations ???
             si touche droite alors rotation + décalage + addition + décalage + rotation ?
             a dupliquer pour le reste
-        """
+        
+
+"""
+
+def rollin(matrix, key):
+
+    
+    init_grid(matrix)
+    print (matrix)
+
+    
+
+    way = True
+    
+    while way :
+        if key == ("g"):
+            rolling_left(key)
+            sum_digit(matrix)
+            rolling_left(key)
+        elif key ==("d"):
+            matrice = np.rot90(matrix, k = -2)
+            rolling_left(key)
+            sum_digit(matrix)
+            rolling_left(key)
+            matrice = np.rot90(matrix,k = 2)
+        elif key ==("h"):
+            matrice = np.rot90(matrix, k = -3)
+            rolling_left(key)
+            sum_digit(matrix)
+            rolling_left(key)
+            matrice = np.rot90(matrix,k = 3)
+        elif key == ("b"):
+            matrice = np.rot90(matrix, k = -1)
+            rolling_left(key)
+            sum_digit(matrix)
+            rolling_left(key)
+            matrice = np.rot90(matrix,k = 1)
+
+
+
