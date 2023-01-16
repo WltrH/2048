@@ -174,7 +174,7 @@ Réponses sur la rotation
 def rollin(matrix, key):
 
     
-    init_grid(matrix)
+
     print (matrix)
 
     
@@ -186,24 +186,30 @@ def rollin(matrix, key):
             rolling_left(key)
             sum_digit(matrix)
             rolling_left(key)
+            matrix = add_digit(matrix)
+            way = False
         elif key ==("d"):
-            matrice = np.rot90(matrix, k = -2)
+            matrix = np.rot90(matrix, k = -2)
             rolling_left(key)
             sum_digit(matrix)
             rolling_left(key)
-            matrice = np.rot90(matrix,k = 2)
+            matrix = np.rot90(matrix,k = 2)
+            matrix = add_digit(matrix)
         elif key ==("h"):
-            matrice = np.rot90(matrix, k = -3)
+            matrix = np.rot90(matrix, k = -3)
             rolling_left(key)
             sum_digit(matrix)
             rolling_left(key)
-            matrice = np.rot90(matrix,k = 3)
+            matrix = np.rot90(matrix,k = 3)
+            matrix = add_digit(matrix)
         elif key == ("b"):
-            matrice = np.rot90(matrix, k = -1)
+            matrix = np.rot90(matrix, k = -1)
             rolling_left(key)
             sum_digit(matrix)
             rolling_left(key)
-            matrice = np.rot90(matrix,k = 1)
+            matrix = np.rot90(matrix,k = 1)
+            matrix = add_digit(matrix)
+        return (matrix)
 
 
 
