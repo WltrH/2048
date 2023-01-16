@@ -59,7 +59,7 @@ def add_digit(matrice):
             else :
                 matrice[li,co] = 4
                 placed = True
-        #return (matrice)
+    return (matrice)
 
 
 
@@ -86,7 +86,7 @@ def rolling_left(matrice):
                     matrice[i,k-1] = matrice[i,k]
                     matrice[i,k] = 0
                     k -= 1
-                    #return (matrice)
+   
 
     ########################################
     #           FONTION ADDITION           #
@@ -102,7 +102,7 @@ def sum_digit(matrice):#pour la gauche
             if matrice[i,j] == matrice[i,j+1]:
                 matrice[i,j] = matrice[i,j] + matrice[i,j+1]
                 matrice[i,j+1] = 0
-                #return (matrice)
+                
 
 
 def trollin(matrix, key):
@@ -136,6 +136,8 @@ def trollin(matrix, key):
             way = False
         elif key ==("h"):
             matrix = np.rot90(matrix, k = -3)
+            print("-----Matrice trollin rotation-----")
+            print (matrix)
             rolling_left(matrix)
             sum_digit(matrix)
             rolling_left(matrix)
@@ -176,43 +178,5 @@ trollin(matrice, key)
 
 print ("-----Matrice après trollin------")
 print (matrice)
-"""
-print("---------------------")
-print("---------Matrice------------")
-
-print(matrice)
-
-print("---------------------")
-print("---------rotation------------")
-matrice = np.rot90(matrice,k=-1)
-print (matrice)
-
-print("---------------------")
-print("---------gauche------------")
-rolling_left(row)
-print (matrice)
-print("---------------------")
-print("---------addition------------")
-sum_digit(matrice)
-print (matrice)
-print("---------------------")
-print("---------gauche------------")
-rolling_left(row)
-print (matrice)
-print("---------------------")
-print("---------position initiale------------")
-matrice = np.rot90(matrice,k=1)
-print (matrice)
-"""
-
-
-
-
-"""
-Réponses sur la rotation
-    pour la rotation pour faire déplacer vers la droite rot90 = 2 et -2
-    pour la rotation pour faire déplacer vers le haut rot90 = 3 et -3
-    pour la rotation pour faire déplacer vers le bas rot90 = 1 et -1
-"""
 
 
