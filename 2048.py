@@ -8,13 +8,15 @@ import random
     ########################################
     #     INITIALISATION DE LA MATRICE     #
     ########################################
-def init_grid (matrice):
+def init_grid ():
+
+    #création de la matrice
+    matrice = np.zeros((4,4))
 
     #création variables pour permettre l'extensibilité de la matrice
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
 
-    #matrice = np.zeros((maxi,mini))
     values = [0,2]
     count = 0
     for i in range (lig):
@@ -26,6 +28,7 @@ def init_grid (matrice):
                     count += 1
                 else:
                      matrice[i,j] = 0
+    return (matrice)
 
 
 
@@ -178,11 +181,12 @@ def checkgame(matrice, state):
 
 def game2048 ():
     #création matrice a 0
-    matrix = np.zeros((4,4))
+    #matrix = np.zeros((4,4))
     #initialisation matrice avec 2 valeurs de 2
-    matrix = init_grid(matrix)
+    matrix = init_grid()
     #booléen pour que le jeu se poursuive ou s'arrête s'il passe à False
     gaming = True
+
     print("lancement du jeux")
     print (matrix)
     #checkgame(matrix, gaming)
