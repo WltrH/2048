@@ -159,12 +159,49 @@ def trollin(matrix, key):
             return (matrix)
             way = False
 
+
+def checkgame(matrice, state):
+    lig = len(matrice[0])     #lignes
+    col = len(matrice)  #colonnes
+    
+    for i in range (lig):
+        for j in range (col):
+            if matrice[i,j] == 2048:
+                print("congrats you won!")
+                state = False
+                return (state)
+            else:
+                break
+
+
+
+
+def game2048 ():
+    #création matrice a 0
+    matrix = np.zeros((4,4))
+    #initialisation matrice avec 2 valeurs de 2
+    matrix = init_grid(matrix)
+    #booléen pour que le jeu se poursuive ou s'arrête s'il passe à False
+    gaming = True
+    print("lancement du jeux")
+    print (matrix)
+    #checkgame(matrix, gaming)
+
+    while gaming == True:
+        key = input("Veuillez choisir une direction enter h, b , d, g : ")
+        trollin(matrix,key)
+        checkgame(matrix, gaming)
+
+    #contrôler que la matrice ne soit pas arrivée à 2048, sinon passer un message comme quoi le joueur à gagné
+
+
+
 #Test des fonctions de mouvement du jeux
 #matrice = np.zeros((4,4))
+game2048()
 
-
-
-matrice = np.array([[2, 0, 2, 0],
+"""
+    matrice = np.array([[2, 0, 2, 0],
 [0, 2, 2, 0],
 [0, 0, 2, 2],
 [0, 0, 0, 0]])
@@ -178,5 +215,8 @@ trollin(matrice, key)
 
 print ("-----Matrice après trollin------")
 print (matrice)
+
+
+"""
 
 
