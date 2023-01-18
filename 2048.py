@@ -112,7 +112,9 @@ def sum_digit(matrice):#pour la gauche
                 matrice[i,j+1] = 0
     return (matrice)
                 
-
+    ########################################
+    #           FONTION TROLLIN            #
+    ########################################
 
 def trollin(matrix, key):
     print("-----Matrice trollin-----")
@@ -196,7 +198,7 @@ def checkmatrice(matrice):
     
     liste = ("g","d","h","b")
     state = True
-    matrice_init = matrice
+    
     count = 0
 
     while count < 4:
