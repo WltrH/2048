@@ -116,11 +116,13 @@ def sum_digit(matrice):#pour la gauche
     #           FONTION TROLLIN            #
     ########################################
 
-def trollin(matrix, key):
+def trollin(matrix, key, copy=False):
     print("-----Matrice trollin-----")
     print (matrix)
     way = True
-
+    
+    if copy:
+        matrix = matrix.copy()
     
     while way :
         if key == ("g"):
@@ -175,15 +177,12 @@ def trollin(matrix, key):
 def checkgame(matrice, state):
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
-    while state:
-        for i in range (lig):
-            for j in range (col):
-                if matrice[i,j] == 16:
-                    state = False
-                    print ("You won!")
-                    return state
-                else:
-                    state = True
+
+    for i in range (lig):
+        for j in range (col):
+            if matrice[i,j] == 16:
+                print ("You won!")
+                return False
     return (matrice)
      
 
@@ -201,23 +200,24 @@ def checkmatrice(matrice):
     
     count = 0
 
-    while count < 4:
-        for i in liste:
-            print(i, "ici")
-            matrice_traite = trollin(matrice_init,i)
-            print("------ matrice traitee-------")
-            print(matrice_traite)
-            print("------ matrice initiale-------")
-            print(matrice_init)
-            if np.array_equal(matrice_init,matrice_traite):
-                print ("Impossibel de bouger à ", i)
-                count += 1
-            else:
-                print ("dans le else")
-                state = False
+    for i in liste:
+        print(i, "ici")
+        matrice_traite = trollin(matrice_init,i, copy=True)
+        print("------ matrice traitee-------")
+        print(matrice_traite)
+        print("------ matrice initiale-------")
+        print(matrice_init)
+        if np.array_equal(matrice_init,matrice_traite):
+            print ("Impossibel de bouger à ", i)
+            count += 1
+        else:
+            print ("dans le else")
+            state = False
+        break
+
     if state == True:
         print("Plus de possibilité de bouger")
-        return (state)
+    return (state)
                 
 
 
