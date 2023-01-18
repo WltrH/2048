@@ -26,8 +26,6 @@ def init_grid ():
                 matrice[i,j] = np.random.choice(values)
                 if matrice[i,j] == 2:
                     count += 1
-                else:
-                     matrice[i,j] = 0
     return (matrice)
 
 
@@ -41,16 +39,22 @@ def add_digit(matrice):
     #création variables pour permettre l'extensibilité de la matrice
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
-
-    #booléen pour savoir si mon placement est juste
+    count = 0
     placed = False
+    #vérification qu'il y ait au moins un 0 dans la matrice, sinon renvoie false et ne passe pas par le while en dessous
+    for i in range (lig):
+        for j in range (col):
+            if matrice[i,j] == 0:
+                count +=1
+            else:
+                placed = True
+    
 
     #boucle while sur le bool tant que je suis à False je rentre dans la boucle
-    while not placed:
+    while not placed and count > 1:
         #Nombre random sur les lignes et colonnes pour avoir un emplacement
         li = np.random.randint(lig)
         co = np.random.randint(col)
-        
         #si l'emplacement est = 0
         if matrice[li,co] == 0:
             #numéro random sur 10
@@ -62,6 +66,7 @@ def add_digit(matrice):
             else :
                 matrice[li,co] = 4
                 placed = True
+
     return (matrice)
 
 
@@ -89,7 +94,7 @@ def rolling_left(matrice):
                     matrice[i,k-1] = matrice[i,k]
                     matrice[i,k] = 0
                     k -= 1
-   
+    return (matrice)
 
     ########################################
     #           FONTION ADDITION           #
@@ -105,6 +110,7 @@ def sum_digit(matrice):#pour la gauche
             if matrice[i,j] == matrice[i,j+1]:
                 matrice[i,j] = matrice[i,j] + matrice[i,j+1]
                 matrice[i,j+1] = 0
+    return (matrice)
                 
 
 
@@ -122,8 +128,8 @@ def trollin(matrix, key):
             matrix = add_digit(matrix)
             print("-----Matrice trollin Gauche-----")
             print (matrix)
-            return (matrix)
             way = False
+
         elif key ==("d"):
             matrix = np.rot90(matrix, k = -2)
             print("-----Matrice trollin rotation-----")
@@ -135,8 +141,8 @@ def trollin(matrix, key):
             matrix = add_digit(matrix)
             print("-----Matrice trollin Droite-----")
             print (matrix)
-            return (matrix)
             way = False
+
         elif key ==("h"):
             matrix = np.rot90(matrix, k = -3)
             print("-----Matrice trollin rotation-----")
@@ -148,8 +154,8 @@ def trollin(matrix, key):
             matrix = add_digit(matrix)
             print("-----Matrice trollin Haut-----")
             print (matrix)
-            return (matrix)
             way = False
+
         elif key == ("b"):
             matrix = np.rot90(matrix, k = -1)
             rolling_left(matrix)
@@ -159,8 +165,9 @@ def trollin(matrix, key):
             matrix = add_digit(matrix)
             print("-----Matrice trollin Bas-----")
             print (matrix)
-            return (matrix)
             way = False
+           
+    return (matrix)        
 
 
 def checkgame(matrice, state):
@@ -175,8 +182,41 @@ def checkgame(matrice, state):
                     return state
                 else:
                     state = True
+    return (matrice)
      
 
+def checkmatrice(matrice):
+    #doit dire si la matrice est identique après avoir essayer de bouger dans les 4 directions
+    lig = len(matrice)     #lignes
+    col = len(matrice[0])  #colonnes
+    size = lig*col
+
+#boucle for dès que j'ai un résultat false (mouvement possible)je peux sortir
+    matrice_init = matrice
+    
+    liste = ("g","d","h","b")
+    state = True
+    matrice_init = matrice
+    count = 0
+
+    while count < 4:
+        for i in liste:
+            print(i, "ici")
+            matrice_traite = trollin(matrice_init,i)
+            print("------ matrice traitee-------")
+            print(matrice_traite)
+            print("------ matrice initiale-------")
+            print(matrice_init)
+            if np.array_equal(matrice_init,matrice_traite):
+                print ("Impossibel de bouger à ", i)
+                count += 1
+            else:
+                print ("dans le else")
+                state = False
+    if state == True:
+        print("Plus de possibilité de bouger")
+        return (state)
+                
 
 
 
@@ -186,10 +226,15 @@ def game2048 ():
     #initialisation matrice avec 2 valeurs de 2
     #matrix = init_grid()
 
-    matrix = np.array([[2, 0, 2, 0],
-                        [0, 2, 2, 0],
-                        [0, 0, 8, 8],
-                        [0, 0, 0, 0]])
+    """matrix = np.array([[2, 4, 2, 4],
+                        [4, 2, 16, 2],
+                        [16, 8, 8, 8],
+                        [2, 4, 2, 4]])"""
+    
+    matrix = np.array([[2, 4, 2, 4],
+                        [4, 2, 16, 2],
+                        [16, 8, 1024, 8],
+                        [2, 4, 2, 4]])
 
     #booléen pour que le jeu se poursuive ou s'arrête s'il passe à False
     gaming = True
@@ -197,11 +242,13 @@ def game2048 ():
     print("lancement du jeux")
     print (matrix)
     #checkgame(matrix, gaming)
-
+    gaming = checkmatrice(matrix, gaming)
     while gaming == True:
             key = input("Veuillez choisir une direction enter h, b , d, g : ")
             trollin(matrix,key)
             gaming = checkgame(matrix, gaming)
+            gaming = checkmatrice(matrix)
+            
 
     #contrôler que la matrice ne soit pas arrivée à 2048, sinon passer un message comme quoi le joueur à gagné
 
@@ -209,7 +256,13 @@ def game2048 ():
 
 #Test des fonctions de mouvement du jeux
 #matrice = np.zeros((4,4))
-game2048()
+matrix = np.array([[2, 1024, 4, 4],
+                    [4, 2, 16, 2],
+                    [16, 8, 2048, 8],
+                    [2, 4, 2, 4]])
+
+checkmatrice(matrix)
+#game2048()
 
 """
     matrice = np.array([[2, 0, 2, 0],
