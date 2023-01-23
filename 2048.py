@@ -238,6 +238,7 @@ def stats (move):
     categories = ['Droite', 'Haut', 'Gauche', 'Bas']
     N = len(categories)
 
+    #tableau pour récupérer les données de mouvements
     values = []
     values.append(move)
 
