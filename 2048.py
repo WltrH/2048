@@ -1,5 +1,6 @@
 
 from select import POLLIN
+import matplotlib.pyplot as plt
 import numpy as np
 import random
 
@@ -105,13 +106,15 @@ def sum_digit(matrice):#pour la gauche
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
 
+
     for i in range (lig):
         for j in range (col-1):
             if matrice[i,j] == matrice[i,j+1]:
                 matrice[i,j] = matrice[i,j] + matrice[i,j+1]
+                #add_number.append(matrice[i,j] + matrice[i,j+1])
                 matrice[i,j+1] = 0
     return (matrice)
-                
+
     ########################################
     #           FONTION TROLLIN            #
     ########################################
@@ -173,6 +176,9 @@ def trollin(matrix, key, copy=False):
            
     return (matrix)        
 
+    ########################################
+    #   FONTION VERIFICATION JEU           #
+    ########################################
 
 def checkgame(matrice, state):
     lig = len(matrice[0])     #lignes
@@ -184,9 +190,12 @@ def checkgame(matrice, state):
                 print ("You won!")
                 return False
     return (matrice)
-     
 
-def checkmatrice(matrice):
+
+    ########################################
+    #    FONTION VERIFICATION MATRICE      #
+    ########################################
+def checkmatrice(matrice,state):
     #doit dire si la matrice est identique après avoir essayer de bouger dans les 4 directions
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
@@ -212,34 +221,76 @@ def checkmatrice(matrice):
             count += 1
         else:
             print ("dans le else")
-            state = False
+            state = True
         break
 
-    if state == True:
+    if state == False:
         print("Plus de possibilité de bouger")
     return (state)
-                
+
+
+    ########################################
+    #               STATS                    #
+    ########################################
+def stats (move):
+
+    # Crée un radar chart avec 4 axes
+    categories = ['Droite', 'Haut', 'Gauche', 'Bas']
+    N = len(categories)
+
+    values = []
+    values.append(move)
+
+    angles = [n / float(N) * 2 * np.pi for n in range(N)]
+    angles += angles[:1]
+
+
+    # Initialise le graphique
+    ax = plt.subplot(111, polar=True)
+
+    # Dessine les axes
+    plt.xticks(angles[:-1], categories)
+
+    # Dessine les yticks
+    ax.set_rlabel_position(0)
+    plt.yticks([1, 2, 3, 4], ["1", "2", "3", "4"], color="grey", size=7)
+    plt.ylim(0, 4)
+
+    # Dessine les données
+    values += values[:1]
+    ax.plot(angles, values, linewidth=1, linestyle='solid')
+
+    # Rempli l'interieur
+    ax.fill(angles, values, 'b', alpha=0.1)
+
+    # Affiche le graphique
+    plt.show()
 
 
 
+    ########################################
+    #               JEU                    #
+    ########################################
 def game2048 ():
     #création matrice a 0
-    #matrix = np.zeros((4,4))
+    matrix = np.zeros((4,4))
     #initialisation matrice avec 2 valeurs de 2
-    #matrix = init_grid()
+    matrix = init_grid()
 
     """matrix = np.array([[2, 4, 2, 4],
                         [4, 2, 16, 2],
                         [16, 8, 8, 8],
-                        [2, 4, 2, 4]])"""
+                        [2, 4, 2, 4]])
     
     matrix = np.array([[2, 4, 2, 4],
                         [4, 2, 16, 2],
                         [16, 8, 1024, 8],
-                        [2, 4, 2, 4]])
+                        [2, 4, 2, 4]])"""
 
     #booléen pour que le jeu se poursuive ou s'arrête s'il passe à False
     gaming = True
+    #tableau des scores
+    add_number = []
 
     print("lancement du jeux")
     print (matrix)
@@ -247,6 +298,7 @@ def game2048 ():
     gaming = checkmatrice(matrix, gaming)
     while gaming == True:
             key = input("Veuillez choisir une direction enter h, b , d, g : ")
+            stats(key)
             trollin(matrix,key)
             gaming = checkgame(matrix, gaming)
             gaming = checkmatrice(matrix)
@@ -258,31 +310,12 @@ def game2048 ():
 
 #Test des fonctions de mouvement du jeux
 #matrice = np.zeros((4,4))
-matrix = np.array([[2, 1024, 4, 4],
+"""matrix = np.array([[2, 1024, 4, 4],
                     [4, 2, 16, 2],
                     [16, 8, 2048, 8],
-                    [2, 4, 2, 4]])
+                    [2, 4, 2, 4]])"""
 
-checkmatrice(matrix)
-#game2048()
+game2048()
 
-"""
-    matrice = np.array([[2, 0, 2, 0],
-[0, 2, 2, 0],
-[0, 0, 2, 2],
-[0, 0, 0, 0]])
-
-print ("-----Matrice de base-----")
-print (matrice)
-
-key = input ("Veuillez choisir en h, b, d, g: ")
-
-trollin(matrice, key)
-
-print ("-----Matrice après trollin------")
-print (matrice)
-
-
-"""
 
 
