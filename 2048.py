@@ -228,12 +228,19 @@ def affstats (values):
         x.append(k)
         y.append(v)
     
-    fig1, ax1 = plt.subplots()
+    fig1, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
     ax1.pie(y, explode = explode, labels= x, autopct='%1.1f%%',
             shadow = True, startangle = 90)
-    fig1.canvas.manager.set_window_title('Statistiques 2048')
+    ax1.set_title('Pourcentage Direction')
+    ax2.scatter(x, y)
+    ax2.set_xlabel("Direction")
+    ax2.set_ylabel("Nombre")
+    ax3.barh(x,y)
+    ax4.plot(x,y)
 
-    plt.title('Pourcentage Direction')
+
+    fig1.canvas.manager.set_window_title('Statistiques 2048')
+    
     # Affiche le graphique
     plt.show()
 
