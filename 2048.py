@@ -37,38 +37,30 @@ def init_grid ():
     ########################################
 
 def add_digit(matrice):
-    #création variables pour permettre l'extensibilité de la matrice
+    
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
     count = 0
     placed = False
-    #vérification qu'il y ait au moins un 0 dans la matrice, sinon renvoie false et ne passe pas par le while en dessous
     for i in range (lig):
         for j in range (col):
             if matrice[i,j] == 0:
                 count +=1
-            else:
-                placed = True
-    
-
-    #boucle while sur le bool tant que je suis à False je rentre dans la boucle
-    while not placed and count > 1:
-        #Nombre random sur les lignes et colonnes pour avoir un emplacement
+    if count == 0:
+        return matrice
+    else:
         li = np.random.randint(lig)
         co = np.random.randint(col)
-        #si l'emplacement est = 0
-        if matrice[li,co] == 0:
-            #numéro random sur 10
-            rand = np.random.randint(10)
-            #80% pour le chiffre 2 sinon 4
-            if rand <= 8:
-                matrice[li,co] = 2
-                placed = True
-            else :
-                matrice[li,co] = 4
-                placed = True
+        while matrice[li,co] != 0:
+            li = np.random.randint(lig)
+            co = np.random.randint(col)
+        rand = np.random.randint(10)
+        if rand <= 8:
+            matrice[li,co] = 2
+        else :
+            matrice[li,co] = 4
+    return matrice
 
-    return (matrice)
 
 
 
@@ -177,95 +169,87 @@ def trollin(matrix, key, copy=False):
     return (matrix)        
 
     ########################################
-    #   FONTION VERIFICATION JEU           #
+    #   FONTION VERIFICATION ETAT DU JEU   #
     ########################################
 
-def checkgame(matrice, state):
+def checkgameover(matrice):
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
+
+    if checkmatricemove(matrice) == True:
+        return False
 
     for i in range (lig):
         for j in range (col):
             if matrice[i,j] == 16:
                 print ("You won!")
-                return False
-    return (matrice)
+                return True
+    return (False)
 
 
     ########################################
-    #    FONTION VERIFICATION MATRICE      #
+    #    FONTION VERIFICATION MOUVEMENT    #
     ########################################
-def checkmatrice(matrice,state):
+def checkmatricemove(matrice):
     #doit dire si la matrice est identique après avoir essayer de bouger dans les 4 directions
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
-    size = lig*col
 
-#boucle for dès que j'ai un résultat false (mouvement possible)je peux sortir
-    matrice_init = matrice
-    
-    liste = ("g","d","h","b")
-    state = True
-    
-    count = 0
+# vérifie s'il existe une case vide dans la matrice
+    for i in range(lig):
+        for j in range(col):
+            if matrice[i, j] == 0:
+                return False
 
-    for i in liste:
-        print(i, "ici")
-        matrice_traite = trollin(matrice_init,i, copy=True)
-        print("------ matrice traitee-------")
-        print(matrice_traite)
-        print("------ matrice initiale-------")
-        print(matrice_init)
-        if np.array_equal(matrice_init,matrice_traite):
-            print ("Impossibel de bouger à ", i)
-            count += 1
-        else:
-            print ("dans le else")
-            state = True
-        break
+# vérifie s'il existe des cases identiques côte à côte
+    for i in range(lig):
+        for j in range(col - 1):
+            if matrice[i, j] == matrice[i, j + 1]:
+                return False
+    for i in range(lig - 1):
+        for j in range(col):
+            if matrice[i, j] == matrice[i + 1, j]:
+                return False
 
-    if state == False:
-        print("Plus de possibilité de bouger")
-    return (state)
+# s'il n'y a ni case vide ni cases identiques côte à côte, aucun mouvement valide n'est possible
+    return True
 
 
     ########################################
     #               STATS                    #
     ########################################
-def stats (move):
+def affstats (values):
+    #Tentatvie camenbert 
+    x = []
+    y = []
+    explode = (0, 0.1, 0, 0)
 
-    # Crée un radar chart avec 4 axes
-    categories = ['Droite', 'Haut', 'Gauche', 'Bas']
-    N = len(categories)
+    for k, v in values.items():
+        x.append(k)
+        y.append(v)
+    
+    fig1, ax1 = plt.subplots()
+    ax1.pie(y, explode = explode, labels= x, autopct='%1.1f%%',
+            shadow = True, startangle = 90)
+    fig1.canvas.manager.set_window_title('Statistiques 2048')
 
-    #tableau pour récupérer les données de mouvements
-    values = []
-    values.append(move)
-
-    angles = [n / float(N) * 2 * np.pi for n in range(N)]
-    angles += angles[:1]
-
-
-    # Initialise le graphique
-    ax = plt.subplot(111, polar=True)
-
-    # Dessine les axes
-    plt.xticks(angles[:-1], categories)
-
-    # Dessine les yticks
-    ax.set_rlabel_position(0)
-    plt.yticks([1, 2, 3, 4], ["1", "2", "3", "4"], color="grey", size=7)
-    plt.ylim(0, 4)
-
-    # Dessine les données
-    values += values[:1]
-    ax.plot(angles, values, linewidth=1, linestyle='solid')
-
-    # Rempli l'interieur
-    ax.fill(angles, values, 'b', alpha=0.1)
-
+    plt.title('Pourcentage Direction')
     # Affiche le graphique
     plt.show()
+
+
+def statis(stats, key):
+    #recherche avec le clef pour mettre +1
+    if key == "d":
+         stats["Droite"] = stats.get("Droite", 0) + 1
+    if key == "h":
+        stats["Haut"] = stats.get("Haut", 0) + 1
+    if key == "g":
+        stats["Gauche"] = stats.get("Gauche", 0) + 1
+    if key == "b":
+        stats["Bas"] = stats.get("Bas", 0) + 1
+    return stats
+
 
 
 
@@ -277,46 +261,41 @@ def game2048 ():
     matrix = np.zeros((4,4))
     #initialisation matrice avec 2 valeurs de 2
     matrix = init_grid()
-
-    """matrix = np.array([[2, 4, 2, 4],
-                        [4, 2, 16, 2],
-                        [16, 8, 8, 8],
-                        [2, 4, 2, 4]])
-    
-    matrix = np.array([[2, 4, 2, 4],
-                        [4, 2, 16, 2],
-                        [16, 8, 1024, 8],
-                        [2, 4, 2, 4]])"""
-
     #booléen pour que le jeu se poursuive ou s'arrête s'il passe à False
-    gaming = True
+    gaming = False
     #tableau des scores
-    add_number = []
+    #add_number = []
+    stats = {}
+    stats["Droite"] = 0
+    stats["Haut"] = 0
+    stats["Gauche"] = 0
+    stats["Bas"] = 0
+
+
 
     print("lancement du jeux")
     print (matrix)
     #checkgame(matrix, gaming)
-    gaming = checkmatrice(matrix, gaming)
-    while gaming == True:
+    #gaming = checkmatricemove(matrix)
+    while not gaming:
             key = input("Veuillez choisir une direction enter h, b , d, g : ")
-            stats(key)
+            statis(stats, key)
             trollin(matrix,key)
-            gaming = checkgame(matrix, gaming)
-            gaming = checkmatrice(matrix)
+            gaming = checkgameover(matrix)
+            #print(values)
+    
+    print (stats)
+    key = input("Affichier les stats ? : y,n ")
+    if key == "y":
+        affstats(stats)
+    
             
 
     #contrôler que la matrice ne soit pas arrivée à 2048, sinon passer un message comme quoi le joueur à gagné
 
 
-
-#Test des fonctions de mouvement du jeux
-#matrice = np.zeros((4,4))
-"""matrix = np.array([[2, 1024, 4, 4],
-                    [4, 2, 16, 2],
-                    [16, 8, 2048, 8],
-                    [2, 4, 2, 4]])"""
-
 game2048()
 
 
-
+#Test des fonctions de mouvement du jeux
+#matrice = np.zeros((4,4))
