@@ -41,13 +41,15 @@ def add_digit(matrice):
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
     count = 0
-    placed = False
+
+    #Recherche d'au moins un 0 dans la matrice
     for i in range (lig):
         for j in range (col):
             if matrice[i,j] == 0:
                 count +=1
     if count == 0:
         return matrice
+    #si des 0 dans la matrice alors placement aléatoire sur un emplacement à 0
     else:
         li = np.random.randint(lig)
         co = np.random.randint(col)
@@ -103,8 +105,9 @@ def sum_digit(matrice):#pour la gauche
         for j in range (col-1):
             if matrice[i,j] == matrice[i,j+1]:
                 matrice[i,j] = matrice[i,j] + matrice[i,j+1]
-                #add_number.append(matrice[i,j] + matrice[i,j+1])
                 matrice[i,j+1] = 0
+                global score
+                score += matrice[i,j]
     return (matrice)
 
     ########################################
@@ -125,34 +128,24 @@ def trollin(matrix, key, copy=False):
             sum_digit(matrix)
             rolling_left(matrix)
             matrix = add_digit(matrix)
-            print("-----Matrice trollin Gauche-----")
-            print (matrix)
             way = False
 
         elif key ==("d"):
             matrix = np.rot90(matrix, k = -2)
-            print("-----Matrice trollin rotation-----")
-            print (matrix)
             rolling_left(matrix)
             sum_digit(matrix)
             rolling_left(matrix)
             matrix = np.rot90(matrix,k = 2)
             matrix = add_digit(matrix)
-            print("-----Matrice trollin Droite-----")
-            print (matrix)
             way = False
 
         elif key ==("h"):
             matrix = np.rot90(matrix, k = -3)
-            print("-----Matrice trollin rotation-----")
-            print (matrix)
             rolling_left(matrix)
             sum_digit(matrix)
             rolling_left(matrix)
             matrix = np.rot90(matrix,k = 3)
             matrix = add_digit(matrix)
-            print("-----Matrice trollin Haut-----")
-            print (matrix)
             way = False
 
         elif key == ("b"):
@@ -162,8 +155,6 @@ def trollin(matrix, key, copy=False):
             rolling_left(matrix)
             matrix = np.rot90(matrix,k = 1)
             matrix = add_digit(matrix)
-            print("-----Matrice trollin Bas-----")
-            print (matrix)
             way = False
            
     return (matrix)        
@@ -176,9 +167,11 @@ def checkgameover(matrice):
     lig = len(matrice[0])     #lignes
     col = len(matrice)  #colonnes
 
+    #Test de mouvement possible
     if checkmatricemove(matrice) == True:
         return False
-
+    #Test de toutes les cases pour savoir si le nombre maximal est atteint
+    #retourne True si nombre trouvé pour arrêter le jeux
     for i in range (lig):
         for j in range (col):
             if matrice[i,j] == 16:
@@ -195,13 +188,13 @@ def checkmatricemove(matrice):
     lig = len(matrice)     #lignes
     col = len(matrice[0])  #colonnes
 
-# vérifie s'il existe une case vide dans la matrice
+    #vérifie s'il existe une case vide dans la matrice
     for i in range(lig):
         for j in range(col):
             if matrice[i, j] == 0:
                 return False
 
-# vérifie s'il existe des cases identiques côte à côte
+    #vérifie s'il existe des cases identiques côte à côte
     for i in range(lig):
         for j in range(col - 1):
             if matrice[i, j] == matrice[i, j + 1]:
@@ -211,23 +204,27 @@ def checkmatricemove(matrice):
             if matrice[i, j] == matrice[i + 1, j]:
                 return False
 
-# s'il n'y a ni case vide ni cases identiques côte à côte, aucun mouvement valide n'est possible
+    #s'il n'y a ni case vide ni cases identiques côte à côte, aucun mouvement valide n'est possible
     return True
 
 
     ########################################
-    #               STATS                    #
+    #               STATS                   #
     ########################################
 def affstats (values):
-    #Tentatvie camenbert 
+    #Liste des axes 
     x = []
     y = []
+    #explode pour le pie
     explode = (0, 0.1, 0, 0)
 
+    #mise des key et valeurs de mon dictionnaire envoyer en argument dans affstats
     for k, v in values.items():
         x.append(k)
         y.append(v)
     
+    #figures pour les stats
+    #4 affichages de stats avec ax1,2,3,4 avec 4 graphiques différents
     fig1, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
     ax1.pie(y, explode = explode, labels= x, autopct='%1.1f%%',
             shadow = True, startangle = 90)
@@ -244,7 +241,8 @@ def affstats (values):
     # Affiche le graphique
     plt.show()
 
-
+#fonction pour rajouter le nombre de fois où les touches ont été utilisé lors du jeux
+# Les données sont ajouter au dictionnaire utilisé pour les stats
 def statis(stats, key):
     #recherche avec le clef pour mettre +1
     if key == "d":
@@ -257,6 +255,8 @@ def statis(stats, key):
         stats["Bas"] = stats.get("Bas", 0) + 1
     return stats
 
+    
+ 
 
 
 
@@ -277,21 +277,24 @@ def game2048 ():
     stats["Haut"] = 0
     stats["Gauche"] = 0
     stats["Bas"] = 0
-
+    
+    global score
+    score = 0
+ 
 
 
     print("lancement du jeux")
     print (matrix)
-    #checkgame(matrix, gaming)
-    #gaming = checkmatricemove(matrix)
+    #boucle while tant que gaming st à false on continue
     while not gaming:
             key = input("Veuillez choisir une direction enter h, b , d, g : ")
             statis(stats, key)
             trollin(matrix,key)
             gaming = checkgameover(matrix)
-            #print(values)
-    
-    print (stats)
+            #affichage du score à la fin de chaque déplacement
+            print("Score:", score)
+
+    #demande d'affichage des stats une fois le jeux terminé
     key = input("Affichier les stats ? : y,n ")
     if key == "y":
         affstats(stats)
@@ -301,8 +304,5 @@ def game2048 ():
     #contrôler que la matrice ne soit pas arrivée à 2048, sinon passer un message comme quoi le joueur à gagné
 
 
+#Lancement du jeux
 game2048()
-
-
-#Test des fonctions de mouvement du jeux
-#matrice = np.zeros((4,4))
