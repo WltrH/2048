@@ -2,4 +2,6 @@ copie.py
 exo.py
 Stats.py
 selenium.py
+__pycache__
 .vscode/
+.pytest_cache
