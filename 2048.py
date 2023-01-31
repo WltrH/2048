@@ -114,13 +114,10 @@ def sum_digit(matrice):#pour la gauche
     #           FONTION TROLLIN            #
     ########################################
 
-def trollin(matrix, key, copy=False):
-    print("-----Matrice trollin-----")
-    print (matrix)
+def trollin(matrix, key):
+    #print("-----Matrice trollin-----")
+    #print (matrix)
     way = True
-    
-    if copy:
-        matrix = matrix.copy()
     
     while way :
         if key == ("g"):
@@ -255,8 +252,6 @@ def statis(stats, key):
         stats["Bas"] = stats.get("Bas", 0) + 1
     return stats
 
-    
- 
 
 
 
@@ -280,8 +275,6 @@ def game2048 ():
     
     global score
     score = 0
- 
-
 
     print("lancement du jeux")
     print (matrix)
@@ -293,6 +286,8 @@ def game2048 ():
             gaming = checkgameover(matrix)
             #affichage du score à la fin de chaque déplacement
             print("Score:", score)
+            print(matrix)
+            print(statis)
 
     #demande d'affichage des stats une fois le jeux terminé
     key = input("Affichier les stats ? : y,n ")
