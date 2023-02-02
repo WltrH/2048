@@ -296,8 +296,5 @@ def game2048 ():
     
             
 
-    #contrôler que la matrice ne soit pas arrivée à 2048, sinon passer un message comme quoi le joueur à gagné
 
 
-#Lancement du jeux
-game2048()
