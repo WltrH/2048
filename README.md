@@ -64,7 +64,7 @@ Assurez-vous d'utiliser la bonne version en utilisant la commande "python3" au l
 
 3. Se déplacer dans le répertoire de travail où vous souhaitez cloner le fichier en utilisant la commande cd.
 
-4. Exécuter la commande suivante : ```git clone https://github.com/<nom_d_utilisateur>/<nom_du_dépôt>.git```
+4. Exécuter la commande suivante : ```git clone https://https://github.com/WltrH/2048```
     
     Cela créera un dossier local avec le nom du dépôt qui contiendra tous les fichiers du dépôt GitHub.
 
