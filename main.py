@@ -23,15 +23,15 @@ class Game2048:
     def drawboard(self):
         self.fenetre.fill(self.couleur)
 
-        for i in self.N:
+        for i in range (self.N):
             axeX = self.blocksize * i + self.gap
-            for j in self.N:
+            for j in range (self.N):
                 axeY = self.blocksize * j +self.gap
 
                 pygame.draw.rect(
-                    self.hauteur,
+                    self.fenetre,
                     (0,0,0),
-                    pygame.rect(axeX, axeY, self.taille, self.taille)
+                    pygame.Rect(axeX, axeY, self.taille, self.taille)
                 )
 
     def playing (self):
