@@ -1,5 +1,5 @@
 import pygame
-import Fonctions 
+import Fonctions as fc
 
 
 class Game2048:
@@ -20,6 +20,7 @@ class Game2048:
         self.fenetre = pygame.display.set_mode((self.hauteur, self.largeur))
         pygame.display.set_caption("2048")
 
+    #Création de rectangle
     def drawboard(self):
         self.fenetre.fill(self.couleur)
 
@@ -34,12 +35,29 @@ class Game2048:
                     pygame.Rect(axeX, axeY, self.taille, self.taille)
                 )
 
+    #Fonction pour le jeux
     def playing (self):
 
         run = True
         while run:
             self.drawboard()
             pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        print ('u')
+                    elif event.key == pygame.K_DOWN:
+                        print ('d')
+                    elif event.key == pygame.K_RIGHT:
+                        print ('r')
+                    elif event.key == pygame.K_LEFT:
+                        print('l')
+                    elif event.key == pygame.K_ESCAPE:
+                        running = False
+
 
 if __name__ == "__main__":
     game = Game2048()
