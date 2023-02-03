@@ -9,10 +9,10 @@ import random
     ########################################
     #     INITIALISATION DE LA MATRICE     #
     ########################################
-def init_grid ():
+def init_grid (size):
 
     #création de la matrice
-    matrice = np.zeros((4,4))
+    matrice = np.zeros((size,size))
 
     #création variables pour permettre l'extensibilité de la matrice
     lig = len(matrice[0])     #lignes

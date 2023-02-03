@@ -1,4 +1,5 @@
 import pygame
+#import numpy as np
 import Fonctions as fc
 
 
@@ -20,6 +21,10 @@ class Game2048:
         self.fenetre = pygame.display.set_mode((self.hauteur, self.largeur))
         pygame.display.set_caption("2048")
 
+        #initialisation de la fenêtre
+        self.fenetreStart = fc.init_grid(self.N)
+        self.addNumber = fc.add_digit(self.fenetreStart)
+
     #Création de rectangle
     def drawboard(self):
         self.fenetre.fill(self.couleur)
@@ -31,7 +36,7 @@ class Game2048:
 
                 pygame.draw.rect(
                     self.fenetre,
-                    (0,0,0),
+                    (0,0,0), #mise de la couleur des cellules
                     pygame.Rect(axeX, axeY, self.taille, self.taille)
                 )
 
