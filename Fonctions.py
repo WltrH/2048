@@ -107,7 +107,9 @@ def sum_digit(matrice):#pour la gauche
                 matrice[i,j] = matrice[i,j] + matrice[i,j+1]
                 matrice[i,j+1] = 0
                 global score
-                score += matrice[i,j]
+                #rajout de la fonction score
+                score(matrice[i,j])
+                #score += matrice[i,j]
     return (matrice)
 
     ########################################
@@ -252,7 +254,16 @@ def statis(stats, key):
         stats["Bas"] = stats.get("Bas", 0) + 1
     return stats
 
+#fonction pour compter le score
+#la fonction prend la position de la matrice en argument envoyer depuis la fonction sum_digit
 
+def score (int):
+    global score
+    score = score + int
+    return score
+
+
+    
 
 
     ########################################
@@ -294,7 +305,3 @@ def game2048 ():
     if key == "y":
         affstats(stats)
     
-            
-
-
-

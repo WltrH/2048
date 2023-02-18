@@ -1,6 +1,7 @@
 import pygame
 #import numpy as np
 import Fonctions as fc
+#from Fonctions import score
 
 BG_COLORS = {
     0: (250, 250, 250),
@@ -67,7 +68,8 @@ class Game2048:
         statistiques["Haut"] = 0
         statistiques["Gauche"] = 0
         statistiques["Bas"] = 0
-
+        global score
+        score = 0
         
         run = True
         while run:
@@ -81,22 +83,22 @@ class Game2048:
                     if event.key == pygame.K_UP:
                         print ('u')
                         key = 'h'
-                        statistiques = fc.statis(self.fenetrestatus, key)
+                        #statistiques = fc.statis(self.fenetrestatus, key)
                         self.fenetrestatus = fc.trollin(self.fenetrestatus, key)
                     elif event.key == pygame.K_DOWN:
                         print ('d')
                         key ='b'
-                        statistiques = fc.statis(self.fenetrestatus, key)
+                        #statistiques = fc.statis(self.fenetrestatus, key)
                         self.fenetrestatus = fc.trollin(self.fenetrestatus, key)
                     elif event.key == pygame.K_RIGHT:
                         print ('r')
                         key='d'
-                        statistiques = fc.statis(self.fenetrestatus, key)
+                        #statistiques = fc.statis(self.fenetrestatus, key)
                         self.fenetrestatus = fc.trollin(self.fenetrestatus, key)
                     elif event.key == pygame.K_LEFT:
                         print('l')
                         key = 'g'
-                        statistiques = fc.statis(self.fenetrestatus, key)
+                        #statistiques = fc.statis(self.fenetrestatus, key)
                         self.fenetrestatus = fc.trollin(self.fenetrestatus, key)
                     elif event.key == pygame.K_ESCAPE:
                         running = False
