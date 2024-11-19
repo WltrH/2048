@@ -25,8 +25,10 @@ Téléchargez la version de Python que vous souhaitez installer depuis le site o
 Exécutez l'installateur et suivez les instructions à l'écran.
 Ajoutez Python à votre chemin en suivant les instructions lors de l'installation.
 
-macOS :
 
+MacOS :
+
+---
 Si vous n'avez pas encore installé Homebrew, vous pouvez le faire en ouvrant le Terminal et en tapant la commande suivante :
 
 ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"```
@@ -39,8 +41,10 @@ Vérifiez que Python est installé en tapant la commande suivante :
 
 ```python3 --version```
 
+
 Linux (Ubuntu et dérivés) :
 
+---
 Ouvrez un terminal et tapez la commande suivante pour installer Python :
 
 ```sudo apt-get update```
